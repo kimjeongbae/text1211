@@ -8,64 +8,71 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        List<WiseSaying> wiseSayingList = new ArrayList<>();
-        List<Member> memberList = new ArrayList<>();
-        int id = 1;
-        int memberLastId = 1;
-        System.out.println("====명언 앱 ====");
+        List<Article> articleList = new ArrayList<>();
+
+        int lastId = 1;
+
+
+        System.out.println("==== 시스템 시작 ====");
+
         while (true) {
             System.out.print("명령) ");
-            String command = sc.nextLine();
+            String command = sc.nextLine().trim();
 
             if (command.equals("종료")) {
                 break;
-            } else if (command.equals("입력")) {
-                System.out.print("작가 : ");
-                String author = sc.nextLine();
-                System.out.print("명언 : ");
+            } else if (command.equals("등록")) {
+                System.out.print("제목 : ");
+                String title = sc.nextLine();
+                System.out.print("내용 : ");
                 String content = sc.nextLine();
 
-                System.out.println(id + "번 명언이 입력되었습니다.");
+                System.out.println(lastId + "번 게시글이 입력되었습니다.");
 
-                WiseSaying wiseSaying = new WiseSaying(id, author, content);
-                wiseSayingList.add(wiseSaying);
-                id++;
+                Article article = new Article(lastId, title, content);
+                articleList.add(article);
+
+                lsatId++;
 
             } else if (command.equals("목록")) {
-                System.out.println("번호 / 작가 / 명언");
-                for (WiseSaying wiseSaying : wiseSayingList) {
-                    System.out.println(wiseSaying.getId() + " / " + wiseSaying.getAuthor() + " / " + wiseSaying.getContent());
+                System.out.println("번호 / 제목 / 내용");
+                System.out.println("---------------------");
+
+                for (Article article : articleList) {
+                    System.out.printf("%d,   %s,   %s", article.getId(), article.getTitle(), article.getContent());
                 }
             } else if (command.equals("삭제")) {
-                System.out.println("삭제할 번호를 입력하세요");
-                int removeId = Integer.parseInt(sc.nextLine());
+                System.out.println("삭제할 ID를 입력하세요");
+                System.out.println("ID : ");
+                int removeId = Integer.parseInt(sc.nextLine().trim());
 
-                for (int i = 0; i < wiseSayingList.size(); i++) {
-                    if (wiseSayingList.get(i).getId() == removeId) {
-                        wiseSayingList.remove(wiseSayingList.get(i));
+                for (int i = 0; i < articleList.size(); i++) {
+                    if (articleList.get(i).getId() == removeId) {
+                        articleList.remove(articleList.get(i));
                     }
-
-                    System.out.println(removeId + "번 목록 삭제 되었습니다.");
                 }
+                System.out.println(removeId + "번 게시글이 삭제 되었습니다.");
+
             } else if (command.equals("수정")) {
-                System.out.println("수정할 번호를 입력하세요.");
+                System.out.println("수정할 ID를 입력하세요");
+                System.out.println("ID : ");
+                int modifyId = Integer.parseInt(sc.nextLine().trim());
 
-                int modifyId = Integer.parseInt(sc.nextLine());
-                for (int i = 0; i < wiseSayingList.size(); i++) {
-                    if (wiseSayingList.get(i).getId() == modifyId) {
-                        WiseSaying wiseSaying = wiseSayingList.get(i);
+                for (int i = 0; i < articleList.size(); i++) {
+                    if (articleList.get(i).getId() == modifyId) {
+                        Article article = articleList.get(i);
 
-                        System.out.println("현재 작가 : " + wiseSaying.getAuthor());
-                        System.out.print("수정 작가 : ");
-                        String author = sc.nextLine();
-                        wiseSaying.setAuthor(author);
+                        System.out.printf("기존 제목 : %s\n", article.getTitle() );
+                        System.out.print("수정 제목 : ");
+                        String title = sc.nextLine();
+                        article.setTitle(title);
 
-                        System.out.println("현재 명언 : " + wiseSaying.getContent());
-                        System.out.print("수정 명언 : ");
+                        System.out.printf("기존 내용 : %s\n", article.getContent() );
+                        System.out.print("수정 내용 : ");
                         String content = sc.nextLine();
-                        wiseSaying.setContent(content);
+                        article.setContent(content);
 
-                        System.out.println(modifyId + "번 수정이 완료되었습니다.");
+                        System.out.println(modifyId + "번 게시글이 수정되었습니다.");
                     }
                 }
             } else if (command.equals("회원가입")){
@@ -99,7 +106,7 @@ public class Main {
 
         }
 
-        scanner.close();
+        sc.close();
     }
 }
 
