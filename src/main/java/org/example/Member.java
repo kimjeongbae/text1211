@@ -10,6 +10,8 @@ import lombok.Setter;
 @Setter
 public class Member {
     int id;
-    String memberId;
-    String nickName;
+    String userId;
+    String password;
+
+    String regDate;
 }
